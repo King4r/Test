@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WebWise AI - Intelligent Websites for Your Business</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* CSS Variables for Easy Customization */
+        :root {
+            --primary-color: #3b82f6; /* A vibrant blue for accents */
+            --primary-hover: #2563eb;
+            --bg-dark: #111827; /* Main background */
+            --bg-light: #1f2937; /* Card and section background */
+            --text-primary: #f9fafb; /* For headings */
+            --text-secondary: #d1d5db; /* For paragraphs */
+            --border-color: #374151;
+        }
+
+        /* General Reset & Body Styling */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--bg-dark);
+            color: var(--text-secondary);
+            line-height: 1.7;
+        }
+
+        /* Utility Classes */
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: auto;
+        }
+
+        section {
+            padding: 80px 0;
+        }
+
+        h1, h2, h3 {
+            color: var(--text-primary);
+            font-weight: 700;
+            line-height: 1.3;
+            margin-bottom: 20px;
+        }
+
+        h2 { font-size: 2.5rem; text-align: center; }
+
+        .section-subtitle {
+            text-align: center;
+            max-width: 600px;
+            margin: 0 auto 50px;
+            font-size: 1.1rem;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 12px 28px;
+            background-color: var(--primary-color);
+            color: white;
+            border-radius: 8px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: background-color 0.3s ease;
+        }
+        .btn:hover { background-color: var(--primary-hover); }
+
+        /* Header & Navigation */
+        .header {
+            background-color: rgba(17, 24, 39, 0.8);
+            backdrop-filter: blur(10px);
+            padding: 1rem 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 1px solid var(--border-color);
+        }
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .logo { font-size: 1.5rem; font-weight: 700; color: var(--text-primary); text-decoration: none; }
+        .logo span { color: var(--primary-color); }
+        .nav-links { list-style: none; display: flex; gap: 30px; }
+        .nav-links a { color: var(--text-secondary); text-decoration: none; font-weight: 600; transition: color 0.3s ease; }
+        .nav-links a:hover { color: var(--primary-color); }
+        .hamburger { display: none; font-size: 2rem; cursor: pointer; }
+
+        /* Hero Section */
+        .hero {
+            padding-top: 150px;
+            text-align: center;
+            min-height: 80vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        .hero h1 { font-size: 3.5rem; }
+        .hero p { font-size: 1.2rem; max-width: 700px; margin: 0 auto 30px; }
+
+        /* AI Features Section */
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+        }
+        .feature-card {
+            background-color: var(--bg-light);
+            padding: 30px;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+        }
+        .feature-card .icon { font-size: 2.5rem; margin-bottom: 15px; }
+
+        /* Pricing Section */
+        #pricing { background-color: var(--bg-light); }
+        .pricing-table-wrapper {
+            overflow-x: auto; /* For responsive table */
+            padding-bottom: 20px;
+        }
+        .pricing-table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 800px;
+        }
+        .pricing-table th, .pricing-table td {
+            padding: 20px;
+            text-align: left;
+            border-bottom: 1px solid var(--border-color);
+        }
+        .pricing-table th { color: var(--text-primary); }
+        .pricing-table .package-name { font-weight: 700; font-size: 1.2rem; color: var(--text-primary); }
+        .pricing-table .features-list { list-style: none; margin-top: 15px; }
+        .pricing-table .features-list li { margin-bottom: 10px; display: flex; align-items: flex-start; }
+        .pricing-table .features-list li::before {
+            content: '✓';
+            color: var(--primary-color);
+            font-weight: bold;
+            margin-right: 10px;
+        }
+        .price { font-size: 1.5rem; font-weight: 700; color: var(--primary-color); }
+        .price-ghs { font-size: 1rem; color: var(--text-secondary); }
+        .tier-card {
+            border: 1px solid var(--border-color);
+            border-bottom: none;
+            text-align: center;
+        }
+        .tier-card.popular {
+            border: 2px solid var(--primary-color);
+            position: relative;
+            border-radius: 12px 12px 0 0;
+            overflow: hidden;
+        }
+        .popular-badge {
+            position: absolute;
+            top: 0;
+            right: 0;
+            background: var(--primary-color);
+            color: white;
+            padding: 5px 15px;
+            font-size: 0.8rem;
+            font-weight: bold;
+            transform: rotate(45deg) translate(25%, -25%);
+            transform-origin: top right;
+            width: 120px;
+        }
+
+        /* Process Section */
+        .process-grid {
+            display: flex;
+            justify-content: space-between;
+            gap: 30px;
+            flex-wrap: wrap;
+        }
+        .process-step {
+            background: var(--bg-light);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 30px;
+            flex-basis: 30%;
+            flex-grow: 1;
+            position: relative;
+        }
+        .step-number {
+            position: absolute;
+            top: -20px;
+            left: 30px;
+            background-color: var(--primary-color);
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            font-weight: 700;
+        }
+        .process-step h3 { margin-top: 30px; }
+
+        /* CTA Section */
+        .cta-section { background: var(--bg-light); text-align: center; }
+
+        /* Footer */
+        .footer { padding: 40px 0; text-align: center; border-top: 1px solid var(--border-color); }
+
+        /* Responsive Design */
+        @media(max-width: 768px) {
+            h1 { font-size: 2.5rem; }
+            h2 { font-size: 2rem; }
+            .nav-links {
+                display: none;
+                flex-direction: column;
+                position: absolute;
+                top: 75px;
+                left: 0;
+                width: 100%;
+                background: var(--bg-dark);
+                padding: 20px 0;
+                text-align: center;
+            }
+            .nav-links.active { display: flex; }
+            .hamburger { display: block; }
+            .process-grid { flex-direction: column; }
+        }
+    </style>
+</head>
+<body>
+
+    <header class="header">
+        <nav class="container navbar">
+            <a href="#" class="logo">WebWise<span>AI</span></a>
+            <ul class="nav-links" id="nav-links">
+                <li><a href="#features">Features</a></li>
+                <li><a href="#pricing">Pricing</a></li>
+                <li><a href="#process">Our Process</a></li>
+                <li><a href="#contact" class="btn">Get a Quote</a></li>
+            </ul>
+            <div class="hamburger" id="hamburger">☰</div>
+        </nav>
+    </header>
+
+    <main>
+        <section class="hero container">
+            <h1>Get an AI-Powered Website That Grows Your Business 🚀</h1>
+            <p>We build stunning, intelligent websites for businesses in Ghana and beyond. From simple landing pages to advanced AI integrations, we bring your digital vision to life.</p>
+            <a href="#pricing" class="btn">View Our Packages</a>
+        </section>
+
+        <section id="features" class="container">
+            <h2>Unlock the Power of AI 🤖</h2>
+            <p class="section-subtitle">We don't just build websites; we build intelligent business assets. Integrate powerful AI tools to automate tasks, engage customers, and drive growth.</p>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="icon">💬</div>
+                    <h3>AI Customer Chatbot</h3>
+                    <p>Engage visitors 24/7. Our AI chatbots answer frequently asked questions, capture leads, and guide users, freeing up your team's time.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="icon">✍️</div>
+                    <h3>AI Content Generator</h3>
+                    <p>Keep your website fresh. We can integrate AI that automatically writes engaging blog posts or compelling product descriptions for your business.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="icon">📈</div>
+                    <h3>AI-Powered SEO Assistant</h3>
+                    <p>Rank higher on Google. Get AI-driven suggestions for keywords, page titles, and meta descriptions to optimize your site's visibility.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="icon">📊</div>
+                    <h3>Intelligent Analytics</h3>
+                    <p>Go beyond simple traffic counts. Our AI analytics tools can monitor user behavior, predict trends, and provide actionable insights.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="pricing">
+            <div class="container">
+                <h2>Service Tiers & Pricing 💳</h2>
+                <p class="section-subtitle">Choose a package that fits your needs and budget. We offer transparent pricing for both our local and international clients.</p>
+                <div class="pricing-table-wrapper">
+                    <table class="pricing-table">
+                        <thead>
+                            <tr>
+                                <th>Package</th>
+                                <th class="tier-card">
+                                    <div class="package-name">Starter</div>
+                                </th>
+                                <th class="tier-card popular">
+                                    <div class="popular-badge">Popular</div>
+                                    <div class="package-name">Standard</div>
+                                </th>
+                                <th class="tier-card">
+                                    <div class="package-name">Premium</div>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>Features</strong></td>
+                                <td>
+                                    <ul class="features-list">
+                                        <li>1 responsive landing page</li>
+                                        <li>Contact form</li>
+                                        <li>Basic SEO setup</li>
+                                        <li>Mobile-friendly design</li>
+                                    </ul>
+                                </td>
+                                <td>
+                                     <ul class="features-list">
+                                        <li>Home, About, Services, Blog, Contact</li>
+                                        <li>On-page SEO for all pages</li>
+                                        <li>Optimized loading speed</li>
+                                        <li>Basic CMS (WordPress/Custom)</li>
+                                    </ul>
+                                </td>
+                                <td>
+                                     <ul class="features-list">
+                                        <li>Full custom backend</li>
+                                        <li>AI chatbot integration</li>
+                                        <li>AI blog/content generator</li>
+                                        <li>Advanced analytics dashboard</li>
+                                        <li>Hosting setup & maintenance</li>
+                                    </ul>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><strong>Price</strong></td>
+                                <td class="tier-card">
+                                    <div class="price">$70 – $120</div>
+                                    <div class="price-ghs">1,050 – 1,800 GHS</div>
+                                </td>
+                                <td class="tier-card popular">
+                                    <div class="price">$250 – $450</div>
+                                    <div class="price-ghs">3,750 – 6,750 GHS</div>
+                                </td>
+                                <td class="tier-card">
+                                    <div class="price">$800 – $1,500+</div>
+                                    <div class="price-ghs">12,000 – 22,500+ GHS</div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                 <p style="text-align:center; margin-top: 20px;">💡 <strong>Tip:</strong> Flexible payment plans are available for our clients in Ghana. Let's talk!</p>
+            </div>
+        </section>
+
+        <section id="process" class="container">
+             <h2>Our Streamlined Development Process 🛠️</h2>
+             <p class="section-subtitle">We follow a proven, three-stage process to ensure your project is delivered on time and exceeds your expectations.</p>
+             <div class="process-grid">
+                 <div class="process-step">
+                     <div class="step-number">1</div>
+                     <h3>Stage 1: Foundation</h3>
+                     <p>We start by building fast, responsive template landing pages or a 5-page structure. This stage focuses on getting your core message online quickly and professionally to attract your first customers.</p>
+                 </div>
+                 <div class="process-step">
+                     <div class="step-number">2</div>
+                     <h3>Stage 2: Integration</h3>
+                     <p>Next, we integrate a Content Management System (CMS) for easy updates. We then introduce AI-assisted services, like a blog writer or SEO assistant, to start building your online authority.</p>
+                 </div>
+                 <div class="process-step">
+                     <div class="step-number">3</div>
+                     <h3>Stage 3: Automation & Scale</h3>
+                     <p>For premium clients, we build a full-stack backend with user logins and databases. We integrate advanced AI tools like chatbots and offer ongoing hosting and maintenance for a worry-free experience.</p>
+                 </div>
+             </div>
+        </section>
+
+        <section id="contact" class="cta-section">
+            <div class="container">
+                <h2>Ready to Build Your Intelligent Website?</h2>
+                <p style="max-width: 600px; margin: 0 auto 30px;">Let's discuss your project and find the perfect solution for your business. Get in touch for a free, no-obligation quote.</p>
+                
+                        <!-- From Uiverse.io by omriluz -->
+<div class="form-container">
+    <form class="form" align="center">
+        <div class="form-group">
+            <label for="email">Company Email</label>
+            <input required="" name="email" id="email" type= "text">
+        </div>
+        <div class="form-group">
+            <label for="textarea">How Can We Help You?</label>
+            <textarea required="" cols="50" rows="10" id="textarea" name="textarea">          </textarea>
+        </div>
+        <button type="submit" class="form-submit-btn">Submit</button>
+    </form>
+</div>
+        <style>        /* From Uiverse.io by omriluz */ 
+.form-container {
+  width: 400px;
+  background: linear-gradient(#212121, #212121) padding-box,
+              linear-gradient(145deg, transparent 35%,#e81cff, #40c9ff) border-box;
+  border: 2px solid transparent;
+  padding: 32px 24px;
+  font-size: 14px;
+  font-family: inherit;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  box-sizing: border-box;
+  border-radius: 16px;
+  background-size: 200% 100%;
+  animation: gradient 3s ease infinite;
+  align-self: center;
+}
+
+@keyframes gradient {
+  0% {
+    background-position: 0% 50%;
+  }
+
+  50% {
+    background-position: 100% 50%;
+  }
+
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.form-container button:active {
+  scale: 0.95;
+}
+
+.form-container .form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.form-container .form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.form-container .form-group label {
+  display: block;
+  margin-bottom: 5px;
+  color: #717171;
+  font-weight: 600;
+  font-size: 12px;
+}
+
+.form-container .form-group input {
+  width: 100%;
+  padding: 12px 16px;
+  border-radius: 8px;
+  color: #fff;
+  font-family: inherit;
+  background-color: transparent;
+  border: 1px solid #414141;
+}
+
+.form-container .form-group textarea {
+  width: 100%;
+  padding: 12px 16px;
+  border-radius: 8px;
+  resize: none;
+  color: #fff;
+  height: 96px;
+  border: 1px solid #414141;
+  background-color: transparent;
+  font-family: inherit;
+}
+
+.form-container .form-group input::placeholder {
+  opacity: 0.5;
+}
+
+.form-container .form-group input:focus {
+  outline: none;
+  border-color: #e81cff;
+}
+
+.form-container .form-group textarea:focus {
+  outline: none;
+  border-color: #e81cff;
+}
+
+.form-container .form-submit-btn {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  align-self: flex-start;
+  font-family: inherit;
+  color: #717171;
+  font-weight: 600;
+  width: 40%;
+  background: #313131;
+  border: 1px solid #414141;
+  padding: 12px 16px;
+  font-size: inherit;
+  gap: 8px;
+  margin-top: 8px;
+  cursor: pointer;
+  border-radius: 6px;
+}
+
+.form-container .form-submit-btn:hover {
+  background-color: #fff;
+  border-color: #fff;
+}
+</style>
+
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2025 WebWise AI. All Rights Reserved.</p>
+            <p>Built with 💡 in Ghana for the World.</p>
+        </div>
+    </footer>
+
+    <script>
+        // JavaScript for Mobile Hamburger Menu
+        const hamburger = document.getElementById('hamburger');
+        const navLinks = document.getElementById('nav-links');
+
+        hamburger.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+        });
+
+        // Close menu when a link is clicked
+        navLinks.addEventListener('click', () => {
+             if (navLinks.classList.contains('active')) {
+                 navLinks.classList.remove('active');
+             }
+        });
+    </script>
+</body>
+</html>
